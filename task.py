@@ -30,7 +30,7 @@
 #Good luck.
 
 def average(lista):
-  sum = 0;
+  sum = 0
   for el in lista:
     sum+=el
   return sum/len(lista)
@@ -41,8 +41,12 @@ class Student:
     self.first_name = first_name
     self.surname = surname
     self.grades = []
+
   def student_average(self):
-    return average(grades)
+    sum = 0
+    for el in grades:
+      sum+=el
+    return surname
 
 class SchoolClass:
   def __init__(self, name):
@@ -61,7 +65,7 @@ class School:
   def __init__(self, school_name):
     self.school_name = school_name;
     self.classes = []
-  def append_class(c):
+  def append_class(self,c):
     classes.append(c)
 
 
