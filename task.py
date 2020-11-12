@@ -1,5 +1,3 @@
-# Class diary
-#
 # Create program for handling lesson scores.
 # Use python to handle student (highscool) class scores, and attendance.
 # Make it possible to:
@@ -8,70 +6,78 @@
 # - hold students name and surname
 # - Count total attendance of student
 #
-# Please, use your imagination and create more functionalities.
-# Your project should be able to handle entire school(s?).
-# If you have enough courage and time, try storing (reading/writing)
-# data in text files (YAML, JSON).
-# If you have even more courage, try implementing user interface (might be text-like).
-#
-#Try to expand your implementation as best as you can. 
-#Think of as many features as youcan, and try implementing them.
-#Make intelligent use of pythons syntactic sugar (overloading, iterators, generators, etc)
-#Most of all: CREATE GOOD, RELIABLE, READABLE CODE.
-#The goal of this task is for you to SHOW YOUR BEST python programming skills.
-#Impress everyone with your skills, show off with your code.
-#
-#Your program must be runnable with command "python task.py".
-#Show some usecases of your library in the code (print some things)
-#
-#When you are done upload this code to your github repository. 
-#
-#Delete these comments before commit!
-#Good luck.
+import statistics
+import json
+import os
+import sys
 
-def average(lista):
-  sum = 0
-  for el in lista:
-    sum+=el
-  return sum/len(lista)
+def get_school(schools, school_name):
+    picked_school = next(school for school in schools if school["school_name"] == school_name)
+    return picked_school
 
 
-class Student:
-  def __init__(self, first_name, surname):
-    self.first_name = first_name
-    self.surname = surname
-    self.grades = []
-
-  def student_average(self):
-    sum = 0
-    for el in grades:
-      sum+=el
-    return surname
-
-class SchoolClass:
-  def __init__(self, name):
-    self.name = name
-    self.students = []
-  def append_student(self,s):
-    students.append(s)
-  def class_average(self):
-    stud_averages = []
-    for stud in students:
-      stud_averages.append(average(el))
-    return average(stud_averages)
+def get_class(schol, school_name, class_name):
+    picked_school = get_school(schools, school_name)
+    picked_class = next(c for c in picked_school['classes'] if c["class_name"] == class_name)
+    return picked_class
 
 
-class School:
-  def __init__(self, school_name):
-    self.school_name = school_name;
-    self.classes = []
-  def append_class(self,c):
-    classes.append(c)
+def get_student(schools, school_name, class_name, students_surname):
+    picked_class = get_class(schools, school_name, class_name)
+    picked_student = next(student for student in picked_class['students'] if student['surname']==students_surname)
+    return picked_student
 
 
-if __name__ =='__main__':
-  s1 = Student('Marek', 'Kowalski')
-  s2 = Student ('Jarek', 'Mały')
-#   sclass = SchoolClass('1A')
-#   sclass.append_student(s1)
-#   sclass.append_student(s2)
+def get_students_average(schools, school_name, class_name, students_surname):
+    picked_student = get_student(schools, school_name, class_name, students_surname)
+    return statistics.mean(picked_student['grades'])
+        
+
+def get_school_average(schools, school_name):
+    picked_school = get_school(schools, school_name)
+    class_averages = []
+    for c in picked_school['classes']:
+        class_averages.append(get_class_average(schools,school_name, c["class_name"]))
+    return statistics.mean(class_averages)
+
+
+def get_class_average(school, school_name, class_name):
+    picked_class = get_class(school, school_name, class_name)
+    class_average = []
+    for student in picked_class['students']:
+        class_average.append(statistics.mean(student['grades']))
+    return statistics.mean(class_average)
+
+def append_student(school, school_name, class_name, s_name, s_surname, s_grades):
+    picked_class = get_class(schools, school_name, class_name)
+    picked_class["students"].append({"name":s_name, "surname":s_surname, "grades":s_grades})
+
+def append_attendance(school, school_name, class_name, students_surname, is_present):
+    picked_student = get_student(school, school_name, class_name, students_surname)
+    picked_student['presence'].append(is_present)
+
+def get_students_attendance(school, school_name, class_name, students_surname):
+    chosen_student = get_student(school,school_name,class_name,students_surname)
+    return sum(chosen_student['presence'])/len(chosen_student['presence'])
+    
+        
+
+
+if __name__ == "__main__":
+
+    with open(os.path.join(sys.path[0], "school.json")) as json_file:
+        schools = json.load(json_file)
+
+    print("School average for 3LO is {average}".format(average = get_school_average(schools, "3LO")))
+    print("Class average for 1A in 3LO is {average}".format(average = get_class_average(schools,'3LO','1A')))
+    print("Students Kowalski average is {average}".format(average = get_students_average(schools,'3LO','1A','Kowalski')))
+    print("Students Gorgol presence is {presence}".format(presence = get_students_attendance(schools,'3LO','1B','Gorgol')))
+
+    #some changes in data
+    append_student(schools,'3LO','1A','Ania','Magiera',[1,4,5])
+    append_attendance(schools, '3LO','1A','Kowalski',True)
+    with open('new_schools.json', 'w') as f:
+        json.dump(schools, f, indent =2)
+
+
+
