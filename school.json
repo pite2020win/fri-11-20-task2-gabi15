@@ -1,0 +1,48 @@
+[
+    {
+        "school_name" : "3LO",
+        "classes" : [{
+            "class_name" : "1A",
+            "students":[
+                {"name" : "Jan", "surname" : "Kowalski","grades" : [5,5,4], "presence":[false,true,false]},
+                {"name" : "Agnieszka", "surname" : "Kaleta","grades" : [3,5,4], "presence":[true,true,true]},
+                {"name" : "Janina","surname" : "Polkowska","grades" : [5,3,4], "presence":[true,true,true]},
+                {"name" : "Mikolaj","surname" : "Kropka","grades" : [5,2,4], "presence":[true,true,false]}
+                ]
+            },
+            {
+            "class_name":"1B",
+            "students":[
+                {"name" : "Jacek", "surname" : "Gorgol","grades" : [5,5,4], "presence":[true,true,false]},
+                {"name" : "Katarzyna", "surname" : "Kot","grades" : [3,5,4], "presence":[true,true,true]},
+                {"name" : "Maja","surname" : "Pszczolka","grades" : [5,3,4], "presence":[true,true,false]},
+                {"name" : "Magdalena","surname" : "Pradel","grades" : [5,2,4], "presence":[true,true,false]}
+                    ]
+
+            }
+    ]
+    },
+    {
+        "school_name" : "1LO",
+        "classes" : [{
+            "class_name" : "1A",
+            "students":[
+                {"name" : "Jakub", "surname" : "Witkowski","grades" : [5,5,4], "presence":[true,true,false]},
+                {"name" : "Aleksandra", "surname" : "Pabian","grades" : [3,5,4], "presence":[true,true,true]},
+                {"name" : "Jonasz","surname" : "Konasz","grades" : [5,3,4], "presence":[true,true,false]},
+                {"name" : "Karolina","surname" : "Gonciarz","grades" : [5,2,4], "presence":[false,true,false]}
+                ]
+            },
+            {
+            "class_name":"1B",
+            "students":[
+                {"name" : "Arkadiusz", "surname" : "Skiba","grades" : [5,5,4], "presence":[true,true,false]},
+                {"name" : "Angelika", "surname" : "Kokos","grades" : [3,5,4], "presence":[true,true,false]},
+                {"name" : "Leopold","surname" : "Staff","grades" : [5,3,4], "presence":[true,true,false]},
+                {"name" : "Karol","surname" : "Papuga","grades" : [5,2,4], "presence":[true,true,false]}
+                    ]
+            }
+    ]
+    }
+]
+
